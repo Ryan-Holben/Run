@@ -1,15 +1,18 @@
 #!/usr/bin/python
 
+""" A simple tool for running Python scripts by command line.  Use-cases will typically include scripts that do not require user input, require constant uptime, or scripts that may spend a long time computing something. """
+
 import argparse
 from cliheader import cliHeader
 from subprocess import call, Popen
-from sys import stderr, path
+# from sys import stderr, path
 from time import time
 # from atexit import register
 
 # def exit_hook
 
 def run_script(script, args):
+    """ Runs the script with any arguments passed to it.  Does basic error handling, and returns anything returned by the script back to our program. """
     try:
         process = Popen('python ' + script + ' ' + ' '.join(args), shell = True)
         process.wait()
@@ -22,6 +25,7 @@ def run_script(script, args):
             return -1
 
 def run_arg_parser():
+    """ All of the configuration of the argument parser occurs here.  Returns the arg object."""
     header = cliHeader(title = 'pyTool', author = 'Ryan Holben', version = [0,0,1,'b'], whitespace = 1, bars = True)
     header.show_terse()
 
@@ -106,8 +110,5 @@ def main():
     print 'Average successful runtime: %0.03f s'%( sum(times)/len(times) )
     if args.notify:
         call('tput bel', shell=True)
-# print path[0]
-# print 'python ' + path[0] +'/test.py'
-# Popen('python test.py', shell=F)
-# exit()
+
 main()
